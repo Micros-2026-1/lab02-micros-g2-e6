@@ -5,6 +5,7 @@
 
 ## 1. Integrantes
 
+
 ## 2. Documentación
 
 ### 2.1 Descripción del laboratorio
