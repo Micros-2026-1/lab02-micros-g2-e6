@@ -42,27 +42,32 @@ Dentro de este ciclo infinito se genera una señal digital en el pin RC0. Primer
 
 #### Tabla 1: Medición en frío
 
-| Modo de oscilador | Freq. teórica Fosc | RA6 medible (CLKO)? | Freq. medida RA6 (Hz) | Freq. teórica RC0 (Hz)| Freq. medida RC0 (Hz) | Error RC0 (%) |  
-|------------------|------------------|---------------------|---------------|---------------------|---------------|---------------|
-| INTOSC (interno) | 16,000,000       | Sí                 |                     |                500                 |               |               | |
-| HS (cristal externo 16 MHz) | 16,000,000 | No |     NA      |               500                 |               |               |
-| RC externo       | ~16,000,000*     | No                                    |       N/A        | 500                 |               |               | |
+
+#### Tabla 1: Medición en frío
+
+| Modo de oscilador | Freq. teórica Fosc | RA6 medible (CLKO)? | Freq. medida RA6 (Hz) | Freq. teórica RC0 (Hz)| Freq. medida RC0 (Hz) | Error RC0 (%) |
+|------------------|------------------|---------------------|-----------------------|-----------------------|-----------------------|---------------|
+| INTOSC (interno) | 16,000,000       | Sí                  | 3,995,000             | 500                   | 498                   | 0.40          |
+| HS (cristal externo 16 MHz) | 16,000,000 | No | NA | 500 | 500.2 | 0.04 |
+| RC externo       | ~16,000,000*     | No                  | N/A                   | 500                   | 485                   | 3.00          |
+
+
 
 #### Tabla 2: Medición con calor
 
-| Modo de oscilador | Freq. teórica Fosc | RA6 medible (CLKO)? | Freq. medida RA6 (Hz) | Freq. teórica RC0 (Hz)| Freq. medida RC0 (Hz) | Error RC0 (%) |  
-|------------------|------------------|---------------------|---------------|---------------------|---------------|---------------|
-| INTOSC (interno) | 16,000,000       | Sí                 |                     |                500                 |               |               | |
-| HS (cristal externo 16 MHz) | 16,000,000 | No |     NA      |               500                 |               |               |
-| RC externo       | ~16,000,000*     | No                                    |       N/A        | 500                 |               |               | |
+| Modo de oscilador | Freq. teórica Fosc | RA6 medible (CLKO)? | Freq. medida RA6 (Hz) | Freq. teórica RC0 (Hz)| Freq. medida RC0 (Hz) | Error RC0 (%) |
+|------------------|------------------|---------------------|-----------------------|-----------------------|-----------------------|---------------|
+| INTOSC (interno) | 16,000,000       | Sí                  | 4,030,000             | 500                   | 504                   | 0.80          |
+| HS (cristal externo 16 MHz) | 16,000,000 | No | NA | 500 | 500.5 | 0.10 |
+| RC externo       | ~16,000,000*     | No                  | N/A                   | 500                   | 470                   | 6.00          |
 
 #### Tabla 3: Deriva
 
-| Modo de oscilador |RC0 deriva (Hz) |
-|------------------|--------------------|
-| INTOSC (interno) |                    |                
-| HS (cristal externo 16 MHz) |                |                |
-| RC externo       |                 |                
+| Modo de oscilador | RC0 deriva (Hz) |
+|------------------|-----------------|
+| INTOSC (interno) | 6 |
+| HS (cristal externo 16 MHz) | 0.3 |
+| RC externo | 15 |   |                
 
 
 <!-- Agregar tablas para valores usando PLL -->
@@ -70,31 +75,50 @@ Dentro de este ciclo infinito se genera una señal digital en el pin RC0. Primer
 <!-- Complemente con análisis de lo registrado en tablas -->
 
 ## 2.4 Diagramas
+![alt text](<WhatsApp Image 2026-03-08 at 9.41.09 PM-2.jpeg>)
 
 ## 2.5 Formas de onda
-
 ### INTOSC (interno) 
-
+![alt text](<WhatsApp Image 2026-03-09 at 7.26.29 PM.jpeg>)
 
 ### HS
-
+![alt text](<WhatsApp Image 2026-03-09 at 7.26.29 PM-1.jpeg>)
 ## RC
-
+![alt text](<WhatsApp Image 2026-03-13 at 12.12.03 AM.jpeg>)
 ## 3. Evidencias de implementación
-
+![alt text](<WhatsApp Image 2026-03-09 at 7.27.19 PM.jpeg>)
+![alt text](<WhatsApp Image 2026-03-09 at 7.31.51 PM.jpeg>)
+![alt text](image.png)
 ## 4. Preguntas
 
 * ¿En qué modo se obtuvo la medición más cercana a la frecuencia teórica?
 
+RTA: El modo HS con cristal externo de 16 MHz presentó la medición más cercana a la frecuencia teórica, debido a la alta estabilidad y precisión que ofrecen los osciladores de cristal en comparación con el oscilador interno y el oscilador RC externo.
+
 * ¿Fue posible evidenciar el fenómeno de deriva? ¿Qué factores podrían explicar la variación de frecuencia al calentar el PIC?
+
+RTA: Sí fue posible observar el fenómeno de deriva al comparar las mediciones realizadas en frío y con calor. La variación de frecuencia se debe principalmente a la dependencia de los componentes electrónicos con la temperatura, lo que afecta especialmente a los osciladores internos y RC, mientras que el cristal externo presenta mayor estabilidad.
 
 * ¿Cuál es más preciso en cuanto a frecuencia teórica vs. medida?
 
+RTA:El oscilador HS con cristal externo fue el más preciso, ya que presentó la menor diferencia entre la frecuencia teórica y la frecuencia medida, demostrando mayor estabilidad en comparación con el oscilador interno y el RC externo.
 
 * Explique cómo usar RC0 para estimar la frecuencia del oscilador cuando RA6 no está disponible.
 
+RTA:Cuando RA6 no está disponible para observar la señal CLKO, se puede utilizar el pin RC0 generando una señal periódica mediante retardos controlados por el reloj del microcontrolador. Midiendo la frecuencia de esta señal y comparándola con la frecuencia teórica esperada, es posible estimar la frecuencia real del oscilador.
+
 * Si se quisiera duplicar la frecuencia del PIC usando PLL, ¿en qué modos se podría aplicar?
+
+RTA: El PLL puede utilizarse en los modos INTOSC y HS, ya que ambos proporcionan una señal de reloj suficientemente estable para ser multiplicada. En cambio, el modo RC externo no es adecuado para el uso de PLL debido a su baja estabilidad en frecuencia. 
 
 * Enliste ventajas y desventajas de cada modo.
 
-## 5. Referencias
+RTA: 
+#### Ventajas y desventajas de cada modo de oscilador
+
+| Modo de oscilador | Ventajas | Desventajas |
+|-------------------|----------|-------------|
+| INTOSC (oscilador interno) | No requiere componentes externos. <br> Reduce el costo y tamaño del circuito. <br> Fácil de configurar en el microcontrolador. | Menor precisión que un cristal. <br> Puede variar con temperatura y voltaje. <br> Mayor deriva de frecuencia. |
+| HS (cristal externo) | Muy alta precisión y estabilidad. <br> Frecuencia muy cercana a la teórica. <br> Menor deriva con cambios de temperatura. | Requiere cristal y capacitores externos. <br> Aumenta costo y espacio en la placa. <br> Diseño de hardware más complejo. |
+| RC externo | Implementación sencilla con resistencia y capacitor. <br> Bajo costo de componentes. | Muy baja precisión. <br> Alta variación con temperatura y tolerancia de componentes. <br> Frecuencia difícil de controlar con exactitud. |
+
