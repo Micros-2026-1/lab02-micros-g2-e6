@@ -4,7 +4,9 @@
 
 
 ## 1. Integrantes
-
+Juan Camilo Martin Neira (137915)
+Angie Daniela Ramirez Rosas (134685)
+Juan Diego Cervantes ()
 
 ## 2. Documentación
 En este laboratorio se analizó el funcionamiento de los osciladores interno y externo del microcontrolador PIC18F45K22. Se programó el sistema para generar una señal periódica y medir su frecuencia utilizando un osciloscopio. Con los resultados obtenidos se comparó la precisión y estabilidad de ambos osciladores, observando que el oscilador externo ofrece mayor exactitud, mientras que el oscilador interno es más simple de implementar al no requerir componentes adicionales.
